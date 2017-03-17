@@ -4,7 +4,6 @@ import java.io.File
 
 object Files {
 
-	fun getExisting(paths: Array<String>): List<String> = paths.map(::File)
-			.filter(File::exists)
-			.map { it.absolutePath }
+	fun getExistingFiles(paths: Array<String>): List<File>
+			= paths.map(::File).filter(File::exists)
 }
