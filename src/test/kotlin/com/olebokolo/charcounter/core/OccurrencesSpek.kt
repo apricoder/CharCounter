@@ -9,15 +9,24 @@ object OccurrencesSpek : Spek({
 
 	describe("occurrences") {
 
-		val a_1 = 'a' to 1
-		val b_1 = 'b' to 1
-		val b_2 = 'b' to 2
-		val b_3 = 'b' to 3
+		val occ_b2 = mapOf('b' to 2)
+		val occ_a1_b2 = mapOf('a' to 1, 'b' to 1)
+		val occ_a1_b3 = mapOf('a' to 1, 'b' to 3)
+		val json_a1_b_3 = """{"a":1,"b":3}"""
 
 		it("has extended reduce function") {
-			Assertions.assertEquals(
-					mapOf(a_1, b_3),
-					listOf(mapOf(a_1, b_1), mapOf(b_2)).reduce())
+			Assertions.assertEquals(occ_a1_b3,
+					listOf(occ_a1_b2, occ_b2).reduce())
+		}
+
+		it("can be serialized to json") {
+			Assertions.assertEquals(json_a1_b_3,
+					occ_a1_b3.serialize())
+		}
+
+		it("can be de-serialized from json") {
+			Assertions.assertEquals(occ_a1_b3,
+					json_a1_b_3.deserializeOccurrences())
 		}
 
 	}

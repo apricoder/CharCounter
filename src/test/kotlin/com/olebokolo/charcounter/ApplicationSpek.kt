@@ -11,8 +11,8 @@ object ApplicationSpek : Spek({
 		val app = Application
 		val resources = """src\test\resources"""
 		val paths = arrayOf(
-				"$resources\\some.txt",
-				"$resources\\some.other.txt")
+				"$resources\\some.file.txt",
+				"$resources\\some.other.file.txt")
 
 		it("counts occurrences of chars in test resources files without throwing any exception") {
 			app.main(paths)

@@ -37,6 +37,8 @@ dependencies {
     //--------------------------------------------------------------------
     // * kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // * json serialization
+    compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     //--------------------------------------------------------------------
 
     //--------------------------------------------------------------------
