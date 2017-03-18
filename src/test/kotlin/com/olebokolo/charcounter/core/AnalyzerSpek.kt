@@ -12,8 +12,8 @@ object AnalyzerSpek : Spek({
 
 		val resources = """src\test\resources"""
 		val files = Files.getExistingFiles(arrayOf(
-				"$resources\\some.txt",
-				"$resources\\some.other.txt"))
+				"$resources\\some.file.txt",
+				"$resources\\some.other.file.txt"))
 
 		val line = "Lorem ipsum dolor sit amet"
 		val ignoreCaseLine = "small x occurrences sums with upper X"
