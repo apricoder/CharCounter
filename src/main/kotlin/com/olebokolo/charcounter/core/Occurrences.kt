@@ -1,4 +1,4 @@
-package com.olebokolo.charcounter
+package com.olebokolo.charcounter.core
 
 typealias Occurrences = Map<Char, Int>
 

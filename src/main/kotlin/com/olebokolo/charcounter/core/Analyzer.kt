@@ -1,15 +1,14 @@
-package com.olebokolo.charcounter
+package com.olebokolo.charcounter.core
 
 import java.io.File
 
 object Analyzer {
 
-	fun countCharOccurrences(paths: Array<String>): Occurrences = Files
-			.getExistingFiles(paths)
-			.map { countCharOccurrences(it) }
+	fun countFilesCharOccurrences(files: List<File>): Occurrences = files
+			.map { countFileCharOccurrences(it) }
 			.reduce()
 
-	fun countCharOccurrences(file: File): Occurrences = file
+	fun countFileCharOccurrences(file: File): Occurrences = file
 			.readLines().map { countCharOccurrences(it) }
 			.reduce()
 

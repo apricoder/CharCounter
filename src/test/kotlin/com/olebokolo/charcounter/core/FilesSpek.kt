@@ -1,4 +1,4 @@
-package com.olebokolo.charcounter
+package com.olebokolo.charcounter.core
 
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
