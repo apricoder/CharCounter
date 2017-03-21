@@ -3,6 +3,7 @@ package com.olebokolo.charcounter
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.xit
 
 object ApplicationSpek : Spek({
 
@@ -18,7 +19,11 @@ object ApplicationSpek : Spek({
             app.main(arrayOf())
         }
 
-        it("counts occurrences of chars in test resources files") {
+        /*
+            change 'xit' to 'it' to run analysis on test resources
+            and write results to file in project folder
+        */
+        xit("counts occurrences of chars in test resources files") {
             app.main(paths)
         }
 
