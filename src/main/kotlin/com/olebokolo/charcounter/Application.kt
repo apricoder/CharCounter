@@ -8,14 +8,19 @@ import java.io.File
 
 object Application {
 
-	@JvmStatic
-	fun main(arguments: Array<String>) {
-		val files = with(arguments, ::getExistingFiles)
-		val occurrences = with(files, ::countFilesCharOccurrences).serialize()
-		println("Occurrences:\n$occurrences")
-		val target = with(arguments, ::getTargetFilename)
-		File(target).writeText(occurrences)
-		println("Finished writing occurrences to $target")
-	}
+    @JvmStatic
+    fun main(arguments: Array<String>) {
+        val files = with(arguments, ::getExistingFiles)
+        if (files.isNotEmpty()) analyze(files)
+        else println("No files to analyze")
+    }
+
+    private fun analyze(files: List<File>) {
+        val occurrences = with(files, ::countFilesCharOccurrences).serialize()
+        println("Occurrences:\n$occurrences")
+        val target = with(files, ::getTargetFilename)
+        File(target).writeText(occurrences)
+        println("Finished writing occurrences to $target")
+    }
 
 }
