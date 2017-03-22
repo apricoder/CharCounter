@@ -15,6 +15,7 @@ object ApplicationSpek : Spek({
 
         val app = Application
         val resources = """src\test\resources"""
+        val literature = "$resources\\literature"
         val paths = arrayOf(
                 "$resources\\some.file.txt",
                 "$resources\\some.other.file.txt")
@@ -43,8 +44,12 @@ object ApplicationSpek : Spek({
             app.main(arrayOf(sourcesFlag, paths).flatten())
         }
 
-        it("counts occurrences of chars in test resources files and writes them to output directory") {
+        xit("counts occurrences of chars in test resources files and writes them to output directory") {
             app.main(arrayOf(sourcesFlag, paths, outputFlag, outputDirectory).flatten())
+        }
+
+        it("counts occurrences of real text - intermezzo") {
+            app.main(arrayOf(sourcesFlag, "$literature\\intermezzo.txt", outputFlag, "$outputDirectory\\literature").flatten())
         }
 
     }
