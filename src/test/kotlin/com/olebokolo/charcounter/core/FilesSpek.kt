@@ -12,10 +12,13 @@ object FilesSpek : Spek({
         val files = Files
 
         val resources = """src\test\resources"""
-        val paths = arrayOf(
+        val rawPaths = arrayOf(
                 "$resources\\some.file.txt",
                 "$resources\\some.other.file.txt",
                 "$resources\\some.not.existing.txt")
+        val paths = arrayOf(
+                "$resources\\some.file.txt",
+                "$resources\\some.other.file.txt")
         val emptyList = arrayListOf<String>()
         val emptyArr = arrayOf<String>()
 
@@ -23,7 +26,7 @@ object FilesSpek : Spek({
             Assertions.assertEquals(arrayListOf(
                     File("$resources\\some.file.txt"),
                     File("$resources\\some.other.file.txt")
-            ), files.getExistingFiles(paths))
+            ), files.getExistingFiles(rawPaths))
         }
 
         it("returns empty files list for empty arguments") {
@@ -39,6 +42,16 @@ object FilesSpek : Spek({
         it("puts given number inside filename creating next copy") {
             Assertions.assertEquals("occurrences-from#some#(1).txt",
                     Files.getNumberedFilename("occurrences-from#some#.txt", 1))
+        }
+
+        it("combines target file name from passed source files") {
+            Assertions.assertEquals("occurrences-from#some-file.some-other-file#.txt",
+                    Files.getTargetFilename(paths.map(::File)))
+        }
+
+        it("combines target file name from passed source files and target directory") {
+            Assertions.assertEquals("output-directory\\occurrences-from#some-file.some-other-file#.txt",
+                    Files.getTargetFilename(paths.map(::File), "output-directory"))
         }
     }
 

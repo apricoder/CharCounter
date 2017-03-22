@@ -2,7 +2,6 @@ package com.olebokolo.charcounter.core
 
 import java.io.File
 
-typealias Filename = String
 
 object Files {
 
@@ -13,23 +12,24 @@ object Files {
     */
     val suffixRegex = Regex(""".+#.+(#.*\.txt)""")
 
-    fun getExistingFiles(names: Array<Filename>): List<java.io.File> =
+    fun getExistingFiles(names: Array<String>): List<java.io.File> =
             names.map(::File).filter(File::exists)
 
-    fun getTargetFilename(sources: Collection<File>): String {
-        val target = getExpectedTargetFilename(sources)
+    fun getTargetFilename(sources: Collection<File>, outputDirectory: String? = ""): String {
+        val directory = if (outputDirectory?.isNotEmpty()?:false) "$outputDirectory\\" else ""
+        val target = directory + getExpectedTargetFilename(sources)
         if (!File(target).exists()) return target
-        else return getNextFreeNumberedName(target)
+        else return getNextFreeNumberedPath(target)
     }
 
-    private fun getNextFreeNumberedName(target: String): String {
+    private fun getNextFreeNumberedPath(target: String): String {
         var index = 1
         var file: File
         do {
             file = getNumberedCopy(target, index)
             index += 1
         } while (file.exists())
-        return file.name
+        return file.absolutePath
     }
 
     private fun getNumberedCopy(target: String, number: Int) =
@@ -47,7 +47,7 @@ object Files {
         }}#.txt"
     }
 
-    fun normalize(name: Filename): String = File(name)
+    fun normalize(name: String): String = File(name)
             .nameWithoutExtension
             .toLowerCase()
             .replace(" ", "-")
