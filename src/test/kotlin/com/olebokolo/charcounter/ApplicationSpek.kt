@@ -15,13 +15,20 @@ object ApplicationSpek : Spek({
 
         val app = Application
         val resources = """src\test\resources"""
-        val literature = "$resources\\literature"
         val paths = arrayOf(
                 "$resources\\some.file.txt",
                 "$resources\\some.other.file.txt")
         val unexistingPaths = arrayOf(
                 "$resources\\some.imaginary.file",
                 "$resources\\some.other.unexisting.file")
+
+        val literature = "$resources\\literature"
+        val literaryWorks = arrayOf(
+                "$literature\\city.txt",
+                "$literature\\intermezzo.txt",
+                "$literature\\land.txt",
+                "$literature\\tiger-catchers.txt")
+
         val outputDirectory = "${File("").absolutePath}\\out"
 
         it("prints info message when no sources passed") {
@@ -37,8 +44,7 @@ object ApplicationSpek : Spek({
         }
 
         /*
-            change 'xit' to 'it' to run analysis on test resources
-            and write results to file
+            change 'xit' to 'it' to run ignored files
         */
         xit("counts occurrences of chars in test resources files") {
             app.main(arrayOf(sourcesFlag, paths).flatten())
@@ -48,8 +54,8 @@ object ApplicationSpek : Spek({
             app.main(arrayOf(sourcesFlag, paths, outputFlag, outputDirectory).flatten())
         }
 
-        it("counts occurrences of real text - intermezzo") {
-            app.main(arrayOf(sourcesFlag, "$literature\\intermezzo.txt", outputFlag, "$outputDirectory\\literature").flatten())
+        it("counts occurrences of real ukrainian literary works") {
+            app.main(arrayOf(sourcesFlag, literaryWorks, outputFlag, "$outputDirectory\\literature").flatten())
         }
 
     }
