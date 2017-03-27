@@ -19,6 +19,14 @@ object FilesSpek : Spek({
         val paths = arrayOf(
                 "$resources\\some.file.txt",
                 "$resources\\some.other.file.txt")
+
+        val literature = "$resources\\literature"
+        val literaryWorks = arrayOf(
+                "$literature\\city.txt",
+                "$literature\\intermezzo.txt",
+                "$literature\\land.txt",
+                "$literature\\tiger-catchers.txt")
+
         val emptyList = arrayListOf<String>()
         val emptyArr = arrayOf<String>()
 
@@ -52,6 +60,11 @@ object FilesSpek : Spek({
         it("combines target file name from passed source files and target directory") {
             Assertions.assertEquals("output-directory\\occurrences-from#some-file.some-other-file#.txt",
                     Files.getTargetFilename(paths.map(::File), "output-directory"))
+        }
+
+        it("recursively mines all sources from folder") {
+            val allSources = arrayOf(literaryWorks, paths).flatten<String>().map(::File)
+            Assertions.assertEquals(allSources, Files.getFiles(arrayOf(resources)))
         }
     }
 
