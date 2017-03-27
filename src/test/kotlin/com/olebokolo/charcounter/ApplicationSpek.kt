@@ -54,7 +54,7 @@ object ApplicationSpek : Spek({
             app.main(arrayOf(sourcesFlag, paths, outputFlag, outputDirectory).flatten())
         }
 
-        it("counts occurrences of real ukrainian literary works") {
+        xit("counts occurrences of real ukrainian literary works") {
             app.main(arrayOf(sourcesFlag, literaryWorks, outputFlag, "$outputDirectory\\literature").flatten())
         }
 

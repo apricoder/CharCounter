@@ -10,13 +10,32 @@ object Files {
         Example: occurrences#some-file-names{# (2).txt}
         Curly braced text will be found by regex
     */
-    val suffixRegex = Regex(""".+#.+(#.*\.txt)""")
+    private val suffixRegex = Regex(""".+#.+(#.*\.txt)""")
+    private val allowedSourceExtensions = arrayOf("txt", "md")
 
-    fun getExistingFiles(names: Array<String>): List<java.io.File> =
-            names.map(::File).filter(File::exists)
+    fun getFiles(paths: Array<String>): List<File> {
+        val existing = getExistingFiles(paths)
+        return mineFiles(existing.toTypedArray())
+    }
+
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    fun mineFiles(files: Array<File>): List<File> = files
+            .map {
+                when {
+                    it.isDirectory -> mineFiles(it.listFiles())
+                    else -> if (allowedSourceExtensions.contains(it.extension)) it else null
+                }
+            }
+            .filterNotNull()
+            .flatten<File>()
+            .toList()
+
+    fun getExistingFiles(names: Array<String>): List<File> = names
+            .map(::File)
+            .filter(File::exists)
 
     fun getTargetFilename(sources: Collection<File>, outputDirectory: String? = ""): String {
-        val directory = if (outputDirectory?.isNotEmpty()?:false) "$outputDirectory\\" else ""
+        val directory = if (outputDirectory?.isNotEmpty() ?: false) "$outputDirectory\\" else ""
         val target = directory + getExpectedTargetFilename(sources)
         if (!File(target).exists()) return target
         else return getNextFreeNumberedPath(target)
