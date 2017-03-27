@@ -3,8 +3,7 @@ package com.olebokolo.charcounter
 import com.olebokolo.charcounter.core.Analyzer.countFilesCharOccurrences
 import com.olebokolo.charcounter.core.ArgumentsParser.getArgumentsMap
 import com.olebokolo.charcounter.core.Files
-import com.olebokolo.charcounter.core.Files.getExistingFiles
-import com.olebokolo.charcounter.core.Files.getTargetFilename
+import com.olebokolo.charcounter.core.Files.getFiles
 import com.olebokolo.charcounter.core.outputFlag
 import com.olebokolo.charcounter.core.serialize
 import com.olebokolo.charcounter.core.sourcesFlag
@@ -18,8 +17,8 @@ object Application {
         val fileNames = argumentsMap[sourcesFlag]
         val outputDirectory = argumentsMap[outputFlag]?.get(0)
         if (fileNames != null && fileNames.isNotEmpty()) {
-            val existing = with(fileNames, ::getExistingFiles)
-            if (existing.isNotEmpty()) analyze(existing, outputDirectory)
+            val files = with(fileNames, ::getFiles)
+            if (files.isNotEmpty()) analyze(files, outputDirectory)
             else println("No existing files among passed sources")
         } else println("No sources to analyze")
     }
